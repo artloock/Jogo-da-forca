@@ -1,0 +1,29 @@
+Inicio
+
+    Escolher uma palavra secreta aleatoriamente de uma lista pré-definida de palavras
+    Inicializar o estado da palavra como "_" para cada letra na palavra secreta
+    Definir o número máximo de tentativas
+    Inicializar o número de tentativas feitas como 0
+    Inicializar uma lista para armazenar as letras já tentadas
+
+    Enquanto o número de tentativas feitas é menor que o número máximo de tentativas E o estado da palavra contém "_":
+        Exibir o estado atual da palavra
+        Pedir ao usuário para adivinhar uma letra
+
+        Se a letra já foi tentada:
+            Informar ao usuário
+            Continuar para o próximo ciclo do loop
+        
+        Adicionar a letra à lista de letras já tentadas
+        
+        Se a letra está na palavra secreta:
+            Atualizar o estado da palavra substituindo "_" pela letra nas posições corretas
+        Senão:
+            Incrementar o número de tentativas feitas
+        
+    Se o estado da palavra não contém "_":
+        Exibir mensagem de vitória
+    Senão:
+        Exibir mensagem de derrota e revelar a palavra secreta
+
+Fim
