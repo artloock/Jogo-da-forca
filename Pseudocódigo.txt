@@ -1,29 +1,56 @@
-Inicio
+INÍCIO DO JOGO
+    1. EXIBIR boas-vindas e menu de idiomas (PT, EN, JP).
+    2. RECEBER escolha do usuário.
+    3. SE idioma == "JP":
+    A. DEFINIR Dificuldade (Fácil, Médio, Difícil).
+    B. BUSCAR palavra (API ou Local).
+    C. PROCESSAR "palavra_secreta":
+        - SE Fácil: palavra_secreta = romaji
+        - SE Médio: palavra_secreta = kana
+        - SE Difícil: palavra_secreta = kanji
+    4. VERIFICAR conexão com a internet:
+        SE houver internet:
+            BUSCAR palavra aleatória da API correspondente ao idioma.
+        SENÃO:
+            SORTEAR palavra da lista local (fallback) do idioma escolhido.
+    
+    5. INICIALIZAR variáveis:
+        - palavra_secreta (convertida para maiúsculas)
+        - letras_descobertas (lista de underscores "_" com o tamanho da palavra)
+        - tentativas_restantes (ex: 6)
+        - letras_tentadas (lista vazia para evitar repetições)
 
-    Escolher uma palavra secreta aleatoriamente de uma lista pré-definida de palavras
-    Inicializar o estado da palavra como "_" para cada letra na palavra secreta
-    Definir o número máximo de tentativas
-    Inicializar o número de tentativas feitas como 0
-    Inicializar uma lista para armazenar as letras já tentadas
-
-    Enquanto o número de tentativas feitas é menor que o número máximo de tentativas E o estado da palavra contém "_":
-        Exibir o estado atual da palavra
-        Pedir ao usuário para adivinhar uma letra
-
-        Se a letra já foi tentada:
-            Informar ao usuário
-            Continuar para o próximo ciclo do loop
+    6. ENQUANTO tentativas > 0 E "_" estiver em letras_descobertas:
+        A. EXIBIR desenho da forca e letras_descobertas.
+        B. EXIBIR letras já tentadas.
+        C. PEDIR nova letra ao usuário:
+        SE idioma == "JP" E dificuldade == "Médio":
+            SOLICITAR sílaba em Romaji (ex: 'ka').
+            CONVERTER sílaba para Hiragana/Katakana antes de validar.
+    
+        SE idioma == "JP" E dificuldade == "Difícil":
+            EXIBIR "Teclado Virtual" (grade de caracteres com índices).
+            SOLICITAR índice do caractere desejado.
+    
+        SENÃO:
+            SOLICITAR letra única normalmente.
+        D. SE letra já foi tentada:
+            AVISAR usuário e voltar ao passo 5.
         
-        Adicionar a letra à lista de letras já tentadas
-        
-        Se a letra está na palavra secreta:
-            Atualizar o estado da palavra substituindo "_" pela letra nas posições corretas
-        Senão:
-            Incrementar o número de tentativas feitas
-        
-    Se o estado da palavra não contém "_":
-        Exibir mensagem de vitória
-    Senão:
-        Exibir mensagem de derrota e revelar a palavra secreta
+        E. SE letra está na palavra_secreta:
+            ATUALIZAR letras_descobertas nas posições corretas.
+            MENSAGEM de acerto (reforço positivo).
+        SENÃO:
+            SUBTRAIR 1 de tentativas_restantes.
+            MENSAGEM de erro e exibir parte do corpo na forca.
+            
+        F. ADICIONAR letra em letras_tentadas.
 
-Fim
+    7. FIM DO JOGO:
+        SE "_" não estiver em letras_descobertas:
+            EXIBIR mensagem de vitória e a palavra completa.
+        SENÃO:
+            EXIBIR "Game Over" e revelar qual era a palavra.
+            
+    8. PERGUNTAR se deseja jogar novamente.
+FIM
