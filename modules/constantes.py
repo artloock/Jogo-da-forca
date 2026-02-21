@@ -2,14 +2,17 @@
 
 # 1. Listas de Fallback (Caso a internet falhe)
 PALAVRAS = {
-    "PT": ["BANANA", "ABACAXI", "DESENVOLVEDOR", "PROGRAMAÇÃO", "PYTHON"],
-    "EN": ["BANANA", "PINEAPPLE", "DEVELOPER", "PROGRAMMING", "PYTHON"],
+    "PT": [
+        {"palavra": "BANANA", "dica": "Uma fruta amarela"},
+        {"palavra": "DESENVOLVEDOR", "dica": "Quem transforma café em código"}
+    ],
+    "EN": [
+        {"palavra": "PINEAPPLE", "dica": "A tropical fruit with a crown"},
+        {"palavra": "DEVELOPER", "dica": "Someone who writes software"}
+    ],
     "JP": [
-        {"kanji": "猫", "kana": "ねこ", "romaji": "neko"},
-        {"kanji": "犬", "kana": "いぬ", "romaji": "inu"},
-        {"kanji": "日本", "kana": "にほん", "romaji": "nihon"},
-        {"kanji": "食べる", "kana": "たべる", "romaji": "taberu"},
-        {"kanji": "水", "kana": "みず", "romaji": "mizu"}
+        {"kanji": "猫", "kana": "ねこ", "romaji": "neko", "dica": "Um animal que faz 'miau'"},
+        {"kanji": "水", "kana": "mizu", "romaji": "mizu", "dica": "Essencial para a vida, você bebe"}
     ]
 }
 

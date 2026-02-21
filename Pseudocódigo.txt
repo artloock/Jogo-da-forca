@@ -1,56 +1,46 @@
-INÍCIO DO JOGO
-    1. EXIBIR boas-vindas e menu de idiomas (PT, EN, JP).
-    2. RECEBER escolha do usuário.
-    3. SE idioma == "JP":
-    A. DEFINIR Dificuldade (Fácil, Médio, Difícil).
-    B. BUSCAR palavra (API ou Local).
-    C. PROCESSAR "palavra_secreta":
-        - SE Fácil: palavra_secreta = romaji
-        - SE Médio: palavra_secreta = kana
-        - SE Difícil: palavra_secreta = kanji
-    4. VERIFICAR conexão com a internet:
-        SE houver internet:
-            BUSCAR palavra aleatória da API correspondente ao idioma.
-        SENÃO:
-            SORTEAR palavra da lista local (fallback) do idioma escolhido.
-    
-    5. INICIALIZAR variáveis:
-        - palavra_secreta (convertida para maiúsculas)
-        - letras_descobertas (lista de underscores "_" com o tamanho da palavra)
-        - tentativas_restantes (ex: 6)
-        - letras_tentadas (lista vazia para evitar repetições)
+OBJETIVO: Jogo da Forca Multilíngue com Integração de API e Níveis de Japonês.
 
-    6. ENQUANTO tentativas > 0 E "_" estiver em letras_descobertas:
-        A. EXIBIR desenho da forca e letras_descobertas.
-        B. EXIBIR letras já tentadas.
-        C. PEDIR nova letra ao usuário:
-        SE idioma == "JP" E dificuldade == "Médio":
-            SOLICITAR sílaba em Romaji (ex: 'ka').
-            CONVERTER sílaba para Hiragana/Katakana antes de validar.
-    
-        SE idioma == "JP" E dificuldade == "Difícil":
-            EXIBIR "Teclado Virtual" (grade de caracteres com índices).
-            SOLICITAR índice do caractere desejado.
-    
-        SENÃO:
-            SOLICITAR letra única normalmente.
-        D. SE letra já foi tentada:
-            AVISAR usuário e voltar ao passo 5.
-        
-        E. SE letra está na palavra_secreta:
-            ATUALIZAR letras_descobertas nas posições corretas.
-            MENSAGEM de acerto (reforço positivo).
-        SENÃO:
-            SUBTRAIR 1 de tentativas_restantes.
-            MENSAGEM de erro e exibir parte do corpo na forca.
-            
-        F. ADICIONAR letra em letras_tentadas.
+1. INICIALIZAÇÃO:
+   - Importar módulos (constantes, utils, api_engine).
+   - Configurar dicionário de conversão Romaji -> Kana.
 
-    7. FIM DO JOGO:
-        SE "_" não estiver em letras_descobertas:
-            EXIBIR mensagem de vitória e a palavra completa.
-        SENÃO:
-            EXIBIR "Game Over" e revelar qual era a palavra.
-            
-    8. PERGUNTAR se deseja jogar novamente.
-FIM
+2. CONFIGURAÇÃO DO JOGO:
+   - Limpar a tela e exibir boas-vindas.
+   - Solicitar idioma (PT, EN, JP).
+   - SE idioma for Japonês:
+     - Solicitar dificuldade (A-Romaji, B-Sílaba, C-Kanji).
+
+3. PREPARAÇÃO DE DADOS:
+   - Tentar buscar palavra via API Online.
+   - SE API falhar: Escolher palavra aleatória do dicionário local.
+   - Definir PALAVRA_ALVO baseada no idioma/dificuldade:
+     - PT/EN: Palavra normal.
+     - JP Nível A: Leitura Romaji.
+     - JP Nível B: Caracteres Kana (Hiragana/Katakana).
+     - JP Nível C: Caractere Kanji único.
+
+4. ESTADO INICIAL (VARIÁVEIS):
+   - Chances = 6.
+   - Lista de letras tentadas = Vazia.
+   - Progresso (Underlines) = Quantidade de caracteres da PALAVRA_ALVO.
+   - Dica Revelada = Falso (Verdadeiro se for JP Nível C).
+
+5. LOOP PRINCIPAL (Enquanto houver chances e houver '_' no progresso):
+   - Exibir Cabeçalho e Progresso.
+   - SE Dica_Revelada: Exibir dica.
+   - SENÃO: Oferecer dica por 2 chances (tecla '0').
+   
+   - RECEBER PALPITE:
+     - SE JP Nível B: Converter entrada (ex: 'ka') para Kana (ex: 'か').
+     - SE JP Nível C: Aceitar palavra completa em Romaji.
+   
+   - PROCESSAR PALPITE:
+     - SE palpite == '0': Debitar 2 chances e revelar dica.
+     - SE palpite já tentado: Avisar e repetir.
+     - SE palpite está na PALAVRA_ALVO:
+       - Revelar caracteres nas posições corretas.
+     - SENÃO: Debitar 1 chance e adicionar às tentadas.
+
+6. FINALIZAÇÃO:
+   - SE não houver mais '_': Exibir mensagem de Vitória.
+   - SENÃO: Exibir Game Over e revelar a palavra.
